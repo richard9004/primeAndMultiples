@@ -1,28 +1,36 @@
 <?php
-function getPrimeAndMultiples(int $numbers): array {
+
+// Function to determine prime numbers and their multiples up to a given limit
+function getPrimeAndMultiples(int $limit): array {
     $result = [];
-
-    for ($i = 1; $i <= $numbers; $i++) {
+    
+    for ($i = 1; $i <= $limit; $i++) {
         $multiples = [];
-
-        // Find multiples of $i
+        
+        // Find divisors of the current number
         for ($j = 1; $j <= $i; $j++) {
-            if ($i % $j == 0) {
+            if ($i % $j === 0) {
                 $multiples[] = $j;
             }
         }
-
-        // if only 2 dividers 1 and by itself then prime number
-        if (count($multiples) == 2) {
-            $result[$i] = "PRIME";
+        
+        // Check if the number is prime (only two divisors: 1 and itself)
+        if (count($multiples) === 2) {
+            $result[$i] = '[PRIME]';
         } else {
-            $result[$i] = "[" . implode(", ", $multiples) . "]";
+            $result[$i] = '[' . implode(', ', $multiples) . ']';
         }
     }
-
+    
     return $result;
 }
 
-// Scalable function is provided, I can input 100, 200 etc )
-echo json_encode(getPrimeAndMultiples(100), JSON_PRETTY_PRINT);
+// Generate the results for numbers up to my choice
+$results = getPrimeAndMultiples(100);
+
+// Print the results
+foreach ($results as $number => $label) {
+    echo "$number $label\n";
+}
+
 ?>
